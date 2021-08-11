@@ -9,7 +9,7 @@ MacOS 版 B 站开播提醒
 1. 确保安装 Python 且版本 >= 3.7
 2. 安装 requests 包：`pip install requests`
 3. 打开配置文件 `./conf/live.conf`，设置直播间房间号及提醒文案
-4. 在 cron 中添加定时任务
+4. 在 cron 中为主程序 `./src/alert.py` 添加定时任务
 
 > **Note**: 如何设置 cron
 > 
