@@ -4,7 +4,22 @@ MacOS 版 B 站开播提醒
 
 还在为每天无法准时 DD 苦恼不已吗？还不来试试俺滴开播提醒！！！
 
-# Usage
+## Directory tree
+
+```bash
+├── README.md
+├── conf
+│   ├── live.conf
+│   └── signal.conf
+├── log
+│   ├── alert.err
+│   ├── alert.log
+│   └── alert_info.log
+└── src
+    └── alert.py
+```
+
+## Usage
 
 1. 确保安装 Python 且版本 >= 3.7
 2. 安装 requests 包：`pip install requests`
@@ -21,7 +36,7 @@ MacOS 版 B 站开播提醒
 > 
 > 按 ESC 键，输入 `:x` 然后按回车键退出
 
-# Useful resources
+## Useful resources
 
 osascript 介绍：
 
