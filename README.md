@@ -4,7 +4,7 @@ MacOS 版 B 站开播提醒
 
 还在为每天无法准时 DD 而感到痛苦吗？还不来试试俺滴开播提醒！！！
 
-![](./img/screenshot-2.jpg)
+![](/img/screenshot-2.jpg)
 
 ## Directory tree
 
