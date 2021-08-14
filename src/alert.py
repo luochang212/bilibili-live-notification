@@ -11,9 +11,12 @@
 
 import subprocess
 import configparser
-import requests
 import json
 import logging
+import argparse
+
+import requests
+import pyttsx3
 
 
 CONFIG_PATH = '../conf/live.conf'
@@ -29,6 +32,16 @@ class Alert:
         self.signal_path = signal_path
         self.config = self.get_config(config_path)
         self.logger = self.create_logger(log_path)
+        self.args = self.set_argparse()
+
+    @staticmethod
+    def set_argparse():
+        parser = argparse.ArgumentParser()
+        parser.add_argument("-s", "--speech", action='store_true', help='speech synthesis')
+
+        args = parser.parse_args()
+
+        return args
 
     @staticmethod
     def create_logger(log_path: str, logger_name: str = 'main.logger'):
@@ -90,6 +103,11 @@ class Alert:
         cmd = f'display notification "{content}" with title "{title}"'
         subprocess.call(["osascript", "-e", cmd])
 
+    def send_speech_synthesis(self, text):
+        engine = pyttsx3.init()
+        engine.say(text)
+        engine.runAndWait()
+
     def controller(self):
         """main function"""
         live_status = self.api_parser()
@@ -99,13 +117,18 @@ class Alert:
         previous_signal = self.get_signal()
 
         # overwrite previous signal
-        self.set_signal(live_status)
+        if previous_signal != live_status:
+            self.set_signal(live_status)
 
         if live_status == 1 and live_status != previous_signal:
             title = self.config.get('notification', 'title')
             content = self.config.get('notification', 'content')
             self.send_notification(title, content)
-        
+
+            if self.args.speech:
+                speech_text = self.config.get('notification', 'speech_text')
+                self.send_speech_synthesis(speech_text)
+
         # log
         live_room = self.config.get('live_info', 'live_room')
         msg = f'{live_room}\t{previous_signal}\t{live_status}'
